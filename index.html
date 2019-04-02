@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  
+    <title>Document</title>
+</head>
+<!--凌晨12:00會有Bug-->
+<body>
+        <!--- <script src="js.js"></script> -->
+    <div class="jumbotron text-center">
+        <h1>Multiple Stopwatch</h1>
+        <p>You can record multiple time at the same time.</p> 
+    </div>
+    <div class="container">
+        <div class="row text-center">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>time</th>
+                        <th>status</th>
+                    </tr>
+                </thead>
+                <tbody class="" id="time-table">
+
+                </tbody>
+            </table>
+            <div class="col-md-12 col-lg-12">
+                <button type="button" class="btn btn-success btn-xs" id="add-clock">Create a New Stopwatch</button>
+            </div>
+                        
+            <table class="table mt-4 table-sm">
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>record</th>
+                    </tr>
+                </thead>
+                <tbody id="result">
+                    
+                </tbody>
+            </table>
+            <button type="button" class="btn btn-primary" id="avg">Average</button>
+         </div>
+    </div>
+    
+</body>
+
+<script>
+    $(document).ready(function(){
+        var i=0, j=0;
+        
+        //create new clock
+        $("#add-clock").click(function (){
+            var table = "<tr><td>" + i + "</td>\
+                <td id=\"watch-"+i+"\">00:00</td>\
+                <td><button type=\"button\" class=\"btn btn-danger\"><i class=\"fa fa-check\" style=\"font-size:18px\"></i></button></td></tr>";
+            $("#time-table").append(table);
+            $("#watch-"+i).text(getTime());
+            i++;
+            
+        });
+
+        //remove ROW
+        $("tbody").on('click', '.btn', function(){
+            var now = getTime();
+            var currentRow = $(this).closest('tr');
+            var cellValue = currentRow.find('td:eq(1)').text();
+            console.log(cellValue);
+            var r = resultTime(cellValue, now);
+            var table = "<tr><td>" + j + "</td>\
+                <td id=\"result-"+j+"\">"+r+"</td>\
+                </tr>";
+            $("#result").append(table);
+            $(this).closest('tr').remove();
+            j++
+        });
+
+        //Average
+        $("#avg").click(function(){
+            var sum = 0;
+            for(var k=0; k<j; k++){
+                var str = $("#result-"+k).text();
+                tt = str.split(":");
+                sum += parseInt(tt[0])*60+parseInt(tt[1]);
+            }
+            var avg = TimetoString(sum/j);
+            console.log(avg);
+            $("#avg").text(avg);
+        });
+    });
+
+    function getTime(){
+        var time = new Date();
+        var min = time.getMinutes();
+        var sec = time.getSeconds();
+        var t = min*60+sec;
+        return t;
+    }
+
+    function resultTime(init, now){
+        var t = now - init;
+        return TimetoString(t);
+    }
+
+    function TimetoString(second){
+        var min = Math.floor(second/60);
+        var sec = Math.round((second%60)*100)/100;
+        if(min == 0) min = '00';
+        else if(min < 10) min = '0'+min;
+        if(sec == 0) sec = '00';
+        else if(sec < 10) sec = '0'+sec;
+        return min + ":" + sec;
+    }
+    
+</script>
+</html>
