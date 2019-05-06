@@ -1,24 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-  <script src="./js.js"></script>
-  
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="./js.js"></script>
+
     <title>Multiple Stopwatch</title>
 </head>
-<!--凌晨12:00會有Bug-->
+
 <body>
-        <!--- <script src="js.js"></script> -->
+    <!--- <script src="js.js"></script> -->
     <div class="jumbotron text-center">
         <h1>Multiple Stopwatch</h1>
-        <p>You can record multiple times at the same time.</p> 
+        <p>You can record multiple times at the same time.</p>
     </div>
     <div class="container mb-3">
         <div class="row text-center">
@@ -34,10 +35,10 @@
 
                 </tbody>
             </table>
-            <div class="col-md-12 col-lg-12">
-                <button type="button" class="btn btn-success btn-xs" id="add-clock">Create a New Stopwatch</button>
+            <div class="col-md-12 col-lg-12" id="addBtn">
+                <button type="button" class="btn btn-success btn-xs" id="add-clock">+</button>
             </div>
-                        
+
             <table class="table mt-4 table-sm">
                 <thead>
                     <tr>
@@ -46,13 +47,28 @@
                     </tr>
                 </thead>
                 <tbody id="result">
-                    
+
                 </tbody>
             </table>
+
+        </div>
+        <div class="row justify-content-center">
             <button type="button" class="btn btn-primary" id="avg">Average</button>
-         </div>
+        </div>
+
     </div>
-    
+
 </body>
+<style>
+    #add-clock {
+        border-radius: 50%;
+        min-width: 60px;
+        min-height: 60px;
+        font-size: 2em;
+        position: fixed;
+        left: 10%;
+        bottom: 10%;
+    }
+</style>
 
 </html>
