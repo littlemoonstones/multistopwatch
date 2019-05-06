@@ -9,6 +9,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script src="./js.js"></script>
   
     <title>Multiple Stopwatch</title>
 </head>
@@ -54,72 +55,4 @@
     
 </body>
 
-<script>
-    $(document).ready(function(){
-        var i=0, j=0;
-        
-        //create new clock
-        $("#add-clock").click(function (){
-            var table = "<tr><td>" + i + "</td>\
-                <td id=\"watch-"+i+"\">00:00</td>\
-                <td><button type=\"button\" class=\"btn btn-danger\"><i class=\"fa fa-check\" style=\"font-size:18px\"></i></button></td></tr>";
-            $("#time-table").append(table);
-            $("#watch-"+i).text(getTime());
-            i++;
-            
-        });
-
-        //remove ROW
-        $("tbody").on('click', '.btn', function(){
-            var now = getTime();
-            var currentRow = $(this).closest('tr');
-            var cellValue = currentRow.find('td:eq(1)').text();
-            console.log(cellValue);
-            var r = resultTime(cellValue, now);
-            var table = "<tr><td>" + j + "</td>\
-                <td id=\"result-"+j+"\">"+r+"</td>\
-                </tr>";
-            $("#result").append(table);
-            $(this).closest('tr').remove();
-            j++
-        });
-
-        //Average
-        $("#avg").click(function(){
-            var sum = 0;
-            for(var k=0; k<j; k++){
-                var str = $("#result-"+k).text();
-                tt = str.split(":");
-                sum += parseInt(tt[0])*60+parseInt(tt[1]);
-            }
-            var avg = TimetoString(sum/j);
-            console.log(avg);
-            $("#avg").text(avg);
-        });
-    });
-
-    function getTime(){
-        var time = new Date();
-        var min = time.getMinutes();
-        var sec = time.getSeconds();
-        var t = min*60+sec;
-        return t;
-    }
-
-    function resultTime(init, now){
-        var t = now - init;
-        return TimetoString(t);
-    }
-
-    function TimetoString(second){
-        var min = Math.floor(second/60);
-        var sec = Math.round((second%60)*100)/100;
-        if(min == 0) min = '00';
-        else if(min < 10) min = '0'+min;
-        if(sec == 0) sec = '00';
-        else if(sec < 10) sec = '0'+sec;
-        return min + ":" + sec;
-    }
-    
-</script>
 </html>
